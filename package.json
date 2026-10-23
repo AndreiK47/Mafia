@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "private": true,
-  "description": "MAFIA frontend and serverless multiplayer API",
+  "description": "MAFIA multiplayer social deduction game with a Node.js API",
   "engines": { "node": ">=20" },
   "scripts": {
     "dev": "node server/dev.js",

@@ -6,6 +6,7 @@ export function getPool() {
     if (!process.env.DATABASE_URL) throw new Error('DATABASE_URL is required.');
     const url = new URL(process.env.DATABASE_URL);
     if (!['mysql:', 'mysql2:'].includes(url.protocol)) throw new Error('DATABASE_URL must use the mysql protocol.');
+    const sslCa = process.env.DB_SSL_CA?.replace(/\\n/g, '\n');
     pool = mysql.createPool({
       host: url.hostname,
       port: Number(url.port) || 3306,
@@ -19,7 +20,7 @@ export function getPool() {
       timezone: 'Z',
       namedPlaceholders: false,
       decimalNumbers: true,
-      ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: true } : undefined,
+      ssl: process.env.DB_SSL === 'true' ? { ...(sslCa ? { ca: sslCa } : {}), rejectUnauthorized: true } : undefined,
     });
   }
   return pool;

@@ -11,7 +11,9 @@ import { createClientToken, publish } from './realtime.js';
 const app = express();
 const COOKIE = 'mafia_session';
 const production = process.env.NODE_ENV === 'production';
-const appOrigin = process.env.APP_ORIGIN;
+const appOrigin = process.env.APP_ORIGIN?.trim()
+  ? new URL(process.env.APP_ORIGIN.trim()).origin
+  : undefined;
 const hash = value => createHash('sha256').update(value).digest('hex');
 const fail = (status, code, message) => Object.assign(new Error(message), { status, code });
 const id = () => randomUUID();
@@ -25,7 +27,7 @@ app.use(helmet({
   crossOriginResourcePolicy: { policy: 'same-site' },
   contentSecurityPolicy: { directives: {
     defaultSrc: ["'self'"], baseUri: ["'self'"], objectSrc: ["'none'"], frameAncestors: ["'none'"],
-    scriptSrc: ["'self'",'https://cdn.ably.com'], styleSrc: ["'self'","'unsafe-inline'",'https://fonts.googleapis.com'],
+    scriptSrc: ["'self'",'https://cdn.ably.com','https://cdn-cookieyes.com'], styleSrc: ["'self'","'unsafe-inline'",'https://fonts.googleapis.com'],
     fontSrc: ["'self'",'https://fonts.gstatic.com','data:'], imgSrc: ["'self'",'data:','https://images.unsplash.com'],
     connectSrc: ["'self'",'https://rest.ably.io','https://realtime.ably.io','wss://realtime.ably.io'],
   } },
