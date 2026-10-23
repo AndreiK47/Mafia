@@ -1,0 +1,26 @@
+{
+  "name": "mafia-multiplayer-demo",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "description": "MAFIA frontend and serverless multiplayer API",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "dev": "node server/dev.js",
+    "start": "node server/dev.js",
+    "migrate": "node server/migrate.js",
+    "test": "node --test",
+    "seed": "node server/seed.js"
+  },
+  "dependencies": {
+    "ably": "^2.11.0",
+    "argon2": "^0.41.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "mysql2": "^3.24.4",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": { "supertest": "^7.1.4" }
+}

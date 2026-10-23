@@ -1,0 +1,29 @@
+{
+  "version": 2,
+  "functions": {
+    "api/[...path].js": { "maxDuration": 15 }
+  },
+  "rewrites": [
+    { "source": "/room/:roomId", "destination": "/index.html" },
+    { "source": "/game/:gameId/:phase", "destination": "/index.html" },
+    { "source": "/rooms", "destination": "/index.html" },
+    { "source": "/create-room", "destination": "/index.html" },
+    { "source": "/profile", "destination": "/index.html" },
+    { "source": "/history", "destination": "/index.html" },
+    { "source": "/settings", "destination": "/index.html" },
+    { "source": "/how-to-play", "destination": "/index.html" },
+    { "source": "/login", "destination": "/index.html" },
+    { "source": "/demo", "destination": "/index.html" }
+  ],
+  "headers": [{
+    "source": "/(.*)",
+    "headers": [
+      { "key": "X-Content-Type-Options", "value": "nosniff" },
+      { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+      { "key": "X-Frame-Options", "value": "DENY" },
+      { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" },
+      { "key": "Content-Security-Policy", "value": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; script-src 'self' https://cdn.ably.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https://images.unsplash.com; connect-src 'self' https://rest.ably.io https://realtime.ably.io wss://realtime.ably.io" }
+    ]
+  }],
+  "crons": [{ "path": "/api/jobs/reconcile", "schedule": "* * * * *" }]
+}
